@@ -36,8 +36,7 @@ public class SudokuIntFilter extends DocumentFilter {
     
     @Override
     public void insertString(DocumentFilter.FilterBypass fb, int offs,
-                         String str, AttributeSet a) 
-    throws BadLocationException {
+            String str, AttributeSet a) throws BadLocationException {
 
         if (((fb.getDocument().getLength() + str.length()) <= MAX_WIDTH && 
                 isInteger(str)) || str.equals("")) {
@@ -55,8 +54,7 @@ public class SudokuIntFilter extends DocumentFilter {
     throws BadLocationException {
         
         if (((fb.getDocument().getLength() + str.length()
-             - length) <= MAX_WIDTH && isInteger(str)) || 
-                str.equals("")) {
+                - length) <= MAX_WIDTH && isInteger(str)) || str.equals("")) {
             super.replace(fb, offs, length, str, a);
         }
         

@@ -27,7 +27,6 @@ import javax.swing.text.Document;
 public class GUI extends JPanel {
     
     private JFrame frame;
-    private JLabel label;
     private JPanel controlHolder;
     private JPanel gamePanel;
     private Puzzle puzzle;
@@ -71,11 +70,8 @@ public class GUI extends JPanel {
         layoutConstraints.gridy = 0;
         layoutConstraints.anchor = GridBagConstraints.FIRST_LINE_START;
         
-        //Loop to create all the text fields.
-        
-        int i = 0;
-        
-        while (i < 81) {
+        //Loop to create all the text fields.     
+        for(int i = 0; i < 81; i++) {
             Cell textBox = new Cell();
             
             Document styledDoc = textBox.getDocument();
@@ -147,7 +143,6 @@ public class GUI extends JPanel {
             textBox.setBorder(BorderFactory.createMatteBorder(top, lhs, bot, rhs, Color.black));
             gamePanel.add(textBox, this);
             puzzle.getGrid().addCell(textBox, i/9);
-            i++;
         }
         
 
@@ -186,7 +181,6 @@ public class GUI extends JPanel {
                 break;
             }
         }
-        
         while(!lastPuzzle.getGrid().equals(puzzle.getGrid()));
 //        
 //        while(!puzzle.isSolved()) {
