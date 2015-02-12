@@ -157,81 +157,72 @@ public class GUI extends JPanel {
         frame.setVisible(true);
     }
     
-    //Still doesn't get everything - weird looping stuff happening. Check.
+    //Still doesn't get everything!
     public void solveRoutine() {
         
-        do {
-            lastPuzzle = puzzle;
-            
+        while(!puzzle.isSolved()) {
+
             do {
                 solve_FH_LD_NS();
             }
             while(puzzle.changedStatus());
-                
+
             do {
-                puzzle.clearPossibilities();
-                puzzle.findPossibilities();
-                puzzle.find_RHS();
+                solve_RHS();
             }
             while(puzzle.changedStatus());
-            
+
             solve_FH_LD_NS();
-            
+
             if(puzzle.changedStatus()) {
+                continue;
+            }
+
+            do {
+                solve_CHS();
+            }
+            while(puzzle.changedStatus());
+
+            solve_FH_LD_NS();
+
+            if(puzzle.changedStatus()) {
+                continue;
+            }
+
+            solve_RHS();
+
+            if(puzzle.changedStatus()) {
+                continue;
+            }
+
+            solve_CHS();
+
+            if(!puzzle.changedStatus()) {
                 break;
             }
         }
-        while(!lastPuzzle.getGrid().equals(puzzle.getGrid()));
-//        
-//        while(!puzzle.isSolved()) {
-//            
-//            do {
-//                solve_FH_LD_NS();
-//            }
-//            while(puzzle.changedStatus());
-//                
-//            do {
-//                puzzle.clearPossibilities();
-//                puzzle.findPossibilities();
-//                puzzle.find_RHS();
-//            }
-//            while(puzzle.changedStatus());
-//            
-//            solve_FH_LD_NS();
-//            
-//            if(puzzle.changedStatus()) {
-//                break;
-//            }
-            
-            //break; //Tempory to stop infinite loops
-            
-//        }    
-    
-//        do {
-//        puzzle.clearPossibilities();
-//        puzzle.findPossibilities();
-//        puzzle.find_FH_LD_NS();
-//        }
-//        while(puzzle.changedStatus());
-//        
-//        do {
-//        puzzle.clearPossibilities();
-//        puzzle.findPossibilities();
-//        puzzle.find_RHS();
-//        puzzle.clearPossibilities();
-//        puzzle.findPossibilities();
-//        puzzle.find_CHS();
-//        puzzle.clearPossibilities();
-//        puzzle.findPossibilities();
-//        }
-//        while(puzzle.changedStatus());
-//        puzzleLogic.find_BHS();
+        
+        frame.repaint();
+        frame.setVisible(true);
+
     }
     
     private void solve_FH_LD_NS() {
         puzzle.clearPossibilities();
         puzzle.findPossibilities();
         puzzle.find_FH_LD_NS();
+    }
+    
+    private void solve_RHS() {
+        puzzle.clearPossibilities();
+        puzzle.findPossibilities();
+        puzzle.find_RHS();
+    }
+    
+    private void solve_CHS() {
+        puzzle.clearPossibilities();
+        puzzle.findPossibilities();
+        puzzle.find_CHS();
     }
     
     class SolveListener implements ActionListener {
@@ -250,6 +241,8 @@ public class GUI extends JPanel {
             for(int i = 0; i < 81; i++) {
                 puzzle.getGrid().getCell(i/9, i%9).setText("");
             }
+            frame.repaint();
+            frame.setVisible(true);
         }
     }
     

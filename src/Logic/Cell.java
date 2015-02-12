@@ -8,6 +8,7 @@ package Logic;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.swing.JTextField;
 
 /**
@@ -41,7 +42,32 @@ public class Cell extends JTextField {
         return possValues;
     }
 
-    void clearPossValues() {
+    public void clearPossValues() {
         possValues.clear();
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.getText());
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (this == obj) {
+            return true;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final Cell other = (Cell) obj;
+        
+        return other.getText().equals(this.getText());
+    }
+    
+    
 }

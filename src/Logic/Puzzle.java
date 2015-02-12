@@ -7,6 +7,7 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -15,10 +16,12 @@ import java.util.ArrayList;
 public class Puzzle {
     private Grid data;
     private boolean hasChanged;
+    private boolean changed;
     
     public Puzzle() {
         data = new Grid();
         hasChanged = false;
+        changed = false;
     }
     
     public Grid getGrid() {
@@ -58,6 +61,29 @@ public class Puzzle {
             }
         }
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.data);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (this == obj) {
+            return true;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final Puzzle other = (Puzzle) obj;
+        
+        return this.getGrid().equals(other.getGrid()); 
+    }
     
     public boolean isSolved() {
         
@@ -80,13 +106,14 @@ public class Puzzle {
         for(int i = 0; i < 81; i++) {
             Cell selectedCell = data.getCell(i/9, i%9);
             
-            if(selectedCell.getValue() == 0) {
+            if(data.getCell(i/9, i%9).getValue() == 0) {
                 
                 //Check for size 1 possValue lists
-                if (selectedCell.getPossValues().size() == 1) {
+                if (data.getCell(i/9, i%9).getPossValues().size() == 1) {
                     
-                    selectedCell.setText(selectedCell.getPossValues().get(0).toString());
+                    data.getCell(i/9, i%9).setText(data.getCell(i/9, i%9).getPossValues().get(0).toString());
                     hasChanged = true;
+                    changed = true;
                 }
             }
         }
@@ -125,8 +152,10 @@ public class Puzzle {
                     if(count == 1 && k == 8) {
                         data.getCell(rowIndex, colIndex).setText(
                                 Integer.toString(j));
+                        data.getCell(rowIndex, colIndex).repaint();
                         
                         hasChanged = true;
+                        changed = true;
                     }
                 }
             }
@@ -166,11 +195,21 @@ public class Puzzle {
                     if(count == 1 && k == 8) {
                         data.getCell(rowIndex, colIndex).setText(
                                 Integer.toString(j));
+                        data.getCell(rowIndex, colIndex).repaint();
                         
                         hasChanged = true;
+                        changed = true;
                     }
                 }
             }
         }
+    }
+
+    public boolean changed() {
+        return changed;
+    }
+    
+    public void restChanged() {
+        changed = false;
     }
 }
