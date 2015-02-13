@@ -92,9 +92,11 @@ public class Grid {
     public ArrayList<Cell> getBoxCells(int rowIndex, int colIndex) {
         ArrayList<Cell> box = new ArrayList<>();
         
-        for(int i = rowIndex; i < rowIndex + 2; i++) {
+        for(int i = (rowIndex / 3 + 2 * (rowIndex / 3)); 
+                i < (rowIndex / 3 + 2 * (rowIndex / 3) + 3); i++) {
             
-            for(int j = colIndex; j < colIndex + 2; j++) {
+            for(int j = (colIndex / 3 + 2 * (colIndex / 3));
+                    j < (colIndex / 3 + 2 * (colIndex / 3) + 3); j++) {
                 
                 box.add(this.getCell(i,j));
             }

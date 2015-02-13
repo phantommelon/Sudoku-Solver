@@ -197,6 +197,35 @@ public class GUI extends JPanel {
 
             solve_CHS();
 
+            if(puzzle.changedStatus()) {
+                continue;
+            }
+            
+            do {
+                solve_BHS();
+            }
+            while(puzzle.changedStatus());
+            
+            solve_FH_LD_NS();
+
+            if(puzzle.changedStatus()) {
+                continue;
+            }
+
+            solve_RHS();
+
+            if(puzzle.changedStatus()) {
+                continue;
+            }
+
+            solve_CHS();
+
+            if(puzzle.changedStatus()) {
+                continue;
+            }
+            
+            solve_BHS();
+            
             if(!puzzle.changedStatus()) {
                 break;
             }
@@ -223,6 +252,12 @@ public class GUI extends JPanel {
         puzzle.clearPossibilities();
         puzzle.findPossibilities();
         puzzle.find_CHS();
+    }
+    
+    private void solve_BHS() {
+        puzzle.clearPossibilities();
+        puzzle.findPossibilities();
+        puzzle.find_BHS();
     }
     
     class SolveListener implements ActionListener {

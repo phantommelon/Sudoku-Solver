@@ -204,6 +204,50 @@ public class Puzzle {
             }
         }
     }
+    
+    public void find_BHS() {
+        
+        for(int i = 0; i < 9; i++) {
+            
+            ArrayList<Cell> selectedBox = data.getBoxCells(i, (i%3)*3);
+            
+            //Check for a single occurence of j in each box
+            
+            for(int j = 1; j < 10; j++) {
+                int count = 0;
+                int rowIndex = 0;
+                int colIndex = 0;
+                
+                for(int k = 0; k < 9; k++) {
+                    
+                    Cell selectedCell = selectedBox.get(k);
+                    
+                    if(selectedCell.getValue() == 0) {
+                        
+                        if(selectedCell.getPossValues().contains(j)) {
+                            
+                            count++;
+                            rowIndex = k;
+                            colIndex = i;
+                        }
+                    }
+                    
+                    if(count > 1) {
+                        break;
+                    }
+                    
+                    if(count == 1 && k == 8) {
+                        data.getCell(rowIndex, colIndex).setText(
+                                Integer.toString(j));
+                        data.getCell(rowIndex, colIndex).repaint();
+                        
+                        hasChanged = true;
+                        changed = true;
+                    }
+                }
+            }
+        }
+    }
 
     public boolean changed() {
         return changed;
